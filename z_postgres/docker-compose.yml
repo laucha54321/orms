@@ -1,0 +1,11 @@
+version: "3.7"
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pepenacho
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./MOCK_DATA.sql:/docker-entrypoint-initdb.d/MOCK_DATA.sql
