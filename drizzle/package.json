@@ -2,10 +2,23 @@
   "name": "drizzle",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsc && node dist/index.js",
+    "migration:generate": "drizzle-kit generate:pg --schema=./src/db/schema.ts",
+    "migration:push": "node -r esbuild-register src/db/migrate.ts",
+    "migrate": "drizzle-kit generate:pg --schema=./src/db/schema.ts && node -r esbuild-register src/db/migrate.ts"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "drizzle-orm": "^0.28.6",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.8",
+    "@types/pg": "^8.10.7",
+    "drizzle-kit": "^0.19.13",
+    "typescript": "^5.2.2"
+  }
 }
