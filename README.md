@@ -10,8 +10,6 @@
 - Proceso de Desarrollo (querys, código)
 - Velocidad (performance)
 
-# Datos
-
 # Fomato de Datos
 
 ```mermaid
