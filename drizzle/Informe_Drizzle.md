@@ -9,6 +9,10 @@ La documentación de Drizzle es efectiva, siendo al mismo tiempo simple y comple
 La comunidad de Drizzle es muy dinámica y, según las tendencias actuales, es probable que se convierta en uno de los ORMs más populares en el entorno de TypeScript. A pesar de tener menos estrellas en GitHub en comparación con Prisma, es importante destacar que Drizzle es un proyecto más reciente.
 ![Alt text](star-history-20231026.png)
 
+## Soporte de Bases de Datos
+
+Drizzle es compatible con las principales bases de datos utilizadas en el mercado, como PostgreSQL, MySQL y SQLite. Lo que diferencia a Drizzle de otras soluciones es su capacidad para proporcionar bibliotecas específicas, a las cuales se refieren como "dialectos," para cada una de estas bases de datos. Esto permite que Drizzle ofrezca funciones adaptadas a las particularidades de cada sistema de gestión de bases de datos, en lugar de utilizar bibliotecas genéricas.
+
 ## Proceso de Desarrollo
 
 ### Formato de los Datos
@@ -33,6 +37,8 @@ export const pedido = pgTable("pedido", {
 ```
 
 En este caso se establece una clave foránea en la entidad "pedido" que hace referencia al cliente que realiza el pedido, lo que crea una relación entre las entidades "cliente" y "pedido".
+
+Drizzle nos provee con la posibilidad de usar un solo archivo `.ts` para hacer esquema de los datos o utilizar un directorio con un varios archivos `.ts` para organizar nuestras estructuras en distintos archivos.
 
 Nuestra opinión sobre la definición del esquema es que Drizzle podría sacrificar cierta legibilidad al optar por utilizar TypeScript para definir las relaciones entre los datos. Si uno está familiarizado con TypeScript, esto puede no ser un problema significativo, pero en nuestra opinión, la forma en que Prisma aborda esta tarea resulta más legible.
 
@@ -72,11 +78,11 @@ await db.query.posts.findMany({
 
 En este ejemplo con Drizzle, estamos realizando una búsqueda de un post con id = 1. El operador eq se encarga de la operación de igualdad, lo que significa que estamos buscando un post cuyo identificador sea igual a 1. Además, se utiliza el operador lt, que significa "menor que" (less than), para seleccionar comentarios con una fecha de creación anterior a la fecha actual, representada por new Date().
 
-### ¿Por qué drizzle es mas rápido que prisma?
+## ¿Por qué drizzle es mas rápido que prisma?
 
 Drizzle es una evolución de Prisma, y por esta razón, muchas de las comparaciones se realizan directamente con Prisma. Por lo tanto, a continuación, vamos a realizar comparaciones directas entre Drizzle y Prisma en varios de estos casos.
 
-#### Performance
+## Performance
 
 [prisma is slow](https://www.youtube.com/watch?v=J2j1XwZRi30)
 
@@ -86,7 +92,7 @@ En contraste, Prisma se considera más lento en comparación con Drizzle. Prisma
 
 Drizzle aborda este proceso de manera más eficiente, ya que traduce su sintaxis a una sentencia SQL y, por lo tanto, puede realizar una sola consulta a la base de datos. Este enfoque agiliza significativamente el rendimiento de Drizzle en comparación con Prisma.
 
-#### Prepeared Statements
+### Prepeared Statements
 
 [Query performance](https://orm.drizzle.team/docs/perf-queries)
 
@@ -107,7 +113,7 @@ await p1.execute({ id: 12 });
 
 Este enfoque ahorra tiempo en la traducción de la consulta a SQL en cada ejecución, ya que la consulta se construye una vez y se almacena en la constante "p1". Luego, simplemente utilizamos la consulta que se había preparado anteriormente. Comparado con la alternativa en la que se genera la consulta desde cero en cada ejecución, este enfoque resulta más eficiente y beneficioso.
 
-#### Benchmarks
+### Benchmarks
 
 [benchmark](https://github.com/drizzle-team/drizzle-northwind-benchmarks)
 
