@@ -13,7 +13,7 @@ La comunidad de drizzle es super activa y por las tendencias probablemente este 
 [zenstack - Drizzle vs Prisma](https://zenstack.dev/blog/drizzle-prisma#iteration-speed)
 Las migraciones de drizzle funcionan muy bien. A diferencia de prisma drizzle maneja el renombrar de columnas ofreciéndote las opciones en el terminal al hacer el migrate. ![Alt text](image.png)
 
-## Proceso de Desarrolló
+## Proceso de Desarrollo
 
 ### Generar el cliente
 
@@ -30,7 +30,7 @@ Esto no es una ventaja ni desventaja solo algo que tener en cuenta. A diferencia
 
 [prisma is slow](https://www.youtube.com/watch?v=J2j1XwZRi30)
 
-### Porque drizzle es mejor que prisma?
+### ¿Por qué drizzle es mejor que prisma?
 
 #### Performance
 
