@@ -2,18 +2,18 @@
 
 ## Documentación
 
-La documentación en drizzle esta bastante bien, es bastante simple pero tiene lo necesario para poder implementar drizzle de manera correcta.
+La documentación de Drizzle es efectiva, siendo al mismo tiempo simple y completa. Proporciona las pautas necesarias para una implementación correcta de Drizzle.
 
 ## Comunidad
 
-La comunidad de drizzle es super activa y por las tendencias probablemente este va a ser de los ORMs mas utilizados con typescript. Tiene menos estrellas que Prisma en github pero esta es mas nueva.
+La comunidad de Drizzle es muy dinámica y, según las tendencias actuales, es probable que se convierta en uno de los ORMs más populares en el entorno de TypeScript. A pesar de tener menos estrellas en GitHub en comparación con Prisma, es importante destacar que Drizzle es un proyecto más reciente.
 ![Alt text](star-history-20231026.png)
 
 ## Proceso de Desarrollo
 
 ### Formato de los Datos
 
-Drizzle utiliza typescript para definir el schema de los datos.
+Drizzle emplea TypeScript para definir la estructura de los datos (esquema).
 
 ```typescript
 export const cliente = pgTable("cliente", {
@@ -32,24 +32,22 @@ export const pedido = pgTable("pedido", {
 });
 ```
 
-En este caso tendríamos una clave foránea en pedido haciendo referencia a el cliente que hace el pedido y una relación entre cliente y pedido.
+En este caso se establece una clave foránea en la entidad "pedido" que hace referencia al cliente que realiza el pedido, lo que crea una relación entre las entidades "cliente" y "pedido".
 
-Nuestra opinion sobre la definición del schema es que Drizzle esta perdiendo un poco de legibilidad al decidir utilizar typescript para definir las relaciones de los datos, si estas acostumbrado a usar typescript no es tan malo, pero para nosotros la forma en que lo hace prisma es mas legible.
+Nuestra opinión sobre la definición del esquema es que Drizzle podría sacrificar cierta legibilidad al optar por utilizar TypeScript para definir las relaciones entre los datos. Si uno está familiarizado con TypeScript, esto puede no ser un problema significativo, pero en nuestra opinión, la forma en que Prisma aborda esta tarea resulta más legible.
 
 ### Migraciones
 
 [zenstack - Drizzle vs Prisma](https://zenstack.dev/blog/drizzle-prisma#iteration-speed)
 
-Después de modificar el esquema de los datos, en drizzle basta con ejecutar un comando y este se encarga de hacer los cambios a la base de datos.
+Una vez que se ha realizado una modificación en el esquema de datos en Drizzle, basta con ejecutar un comando, y el sistema se encarga de aplicar los cambios en la base de datos. Este proceso es muy similar al funcionamiento de Prisma. La principal distinción entre Drizzle y Prisma radica en el uso de TypeScript para definir el esquema en Drizzle, mientras que Prisma utiliza su propia sintaxis.
 
-Esto es muy similar a como funciona Prisma, la principal diferencia con Prisma es que drizzle usa typescript para definir el schema. En cambio Prisma usa una sintaxis propia.
-
-Drizzle tiene una función interesante que sucede cuando renombramos una columna en la cual nos permite crear una columna nueva o modificar el nombre de la columna ya existente. Esta función nos puede ahorrarnos el eliminar una columna sin intención.
+Drizzle también incluye una función interesante que se activa cuando se renombra una columna. Esta función permite crear una nueva columna o modificar el nombre de la columna existente, evitando así la eliminación accidental de una columna.
 ![Alt text](image.png)
 
 ### Generar el cliente
 
-Al drizzle utilizar typescript para definir el schema de los datos este puede hacer uso de inferencia directamente. Por eso una ves definidos los cambios en el schema no hace falta hacer la migración para empezar a aprovechar la inferencia.
+Dado que Drizzle utiliza TypeScript para definir el esquema de datos, puede aprovechar la inferencia de manera directa. Por lo tanto, una vez que se han realizado los cambios en el esquema, no es necesario ejecutar una migración adicional para empezar a aprovechar esta inferencia.
 
 ### Sintaxis y Querys
 
@@ -57,9 +55,9 @@ Al drizzle utilizar typescript para definir el schema de los datos este puede ha
 
 [Querying](https://orm.drizzle.team/docs/rqb#querying)
 
-Drizzle expone al usuario a utilizar operadores similares a los que se utilizan en SQL. Cuando haces querys con drizzle es muy similar a hacerlas con SQL directamente, la sintaxis es un poco mas linda y podemos aprovechar la inferencia de typescript pero es básicamente SQL.
+Drizzle proporciona al usuario la posibilidad de utilizar operadores similares a los que se emplean en SQL al realizar consultas. La sintaxis utilizada en las consultas de Drizzle es muy parecida a la de SQL, aunque con un aspecto más estilizado. Además, se puede aprovechar la inferencia de TypeScript en estas consultas. En esencia, Drizzle se basa en SQL, lo que puede considerarse tanto una ventaja como una desventaja, dependiendo de la familiaridad del usuario con el SQL.
 
-Esto no es una ventaja ni desventaja solo algo que tener en cuenta. A diferencia de Prisma, que si utiliza algunos operadores para hacer queys que son mas amigables si no sabes usar SQL.
+En contraste, Prisma utiliza algunos operadores que resultan más amigables para aquellos que no están familiarizados con SQL. Esta diferencia en enfoque es importante y debe ser tenida en cuenta al elegir entre Drizzle y Prisma.
 
 ```typescript
 await db.query.posts.findMany({
@@ -72,30 +70,29 @@ await db.query.posts.findMany({
 });
 ```
 
-En este ejemplo estaríamos buscando un post con `id = 1` el operador `eq` es el que hace la operación de "equal" o "igualdad". Luego esta el operador `lt` que seria "less than" o "menor que", el cual esta seleccionando una fecha menor a la fecha de `new Date()` que seria la fecha actual.
+En este ejemplo con Drizzle, estamos realizando una búsqueda de un post con id = 1. El operador eq se encarga de la operación de igualdad, lo que significa que estamos buscando un post cuyo identificador sea igual a 1. Además, se utiliza el operador lt, que significa "menor que" (less than), para seleccionar comentarios con una fecha de creación anterior a la fecha actual, representada por new Date().
 
 ### ¿Por qué drizzle es mas rápido que prisma?
 
-Drizzle es una consecuencia de Prisma y por esta razón muchas de las comparaciones son con Prisma directamente. Por eso vamos a hacer comparaciones directamente con Prisma en varios de estos casos.
+Drizzle es una evolución de Prisma, y por esta razón, muchas de las comparaciones se realizan directamente con Prisma. Por lo tanto, a continuación, vamos a realizar comparaciones directas entre Drizzle y Prisma en varios de estos casos.
 
 #### Performance
 
 [prisma is slow](https://www.youtube.com/watch?v=J2j1XwZRi30)
 
-Drizzle es super rápida como ORM ya que es una fina capa de abstracción en typescript sobre SQL.
-Ademas a diferencia de otros ORMs (Prisma) drizzle hace un solo query por cada sentencia.
+Drizzle se destaca por su velocidad como ORM, ya que consiste en una fina capa de abstracción en TypeScript sobre SQL. A diferencia de otros ORMs, como Prisma, Drizzle realiza únicamente una consulta (query) por cada sentencia.
 
-Prisma es lenta en comparación a drizzle porque prisma utiliza un motor escrito en rust que en principio era para poder desarrollar para multiples lenguajes pero hoy prisma dejo de darle soporte a GoLang y el único lenguaje al que le están dando soporte es a typescript (y javascript).
-![Alt text](image-1.png)
-Ademas prisma utiliza multiples querys para hacer los joins. Porque sus joins no los hace la base de datos a traves de SQL si no que se traen los datos a su motor de Rust y luego hacen el join en el motor. Prisma no hace joins en SQL todos los joins se manejan en rust obligando a utilizar multiples querys a las distintas tablas para traer todo el conjunto de datos al que después se le hace el join.
+En contraste, Prisma se considera más lento en comparación con Drizzle. Prisma utiliza un motor escrito en Rust que inicialmente se diseñó para admitir múltiples lenguajes, pero en la actualidad, Prisma ha dejado de brindar soporte a GoLang, y su enfoque se centra en TypeScript y JavaScript. Además, Prisma utiliza múltiples consultas para realizar operaciones de unión (joins) en la base de datos. En lugar de que la base de datos realice los joins directamente a través de SQL, Prisma trae los datos a su motor en Rust y realiza las operaciones de unión allí. Esto obliga a realizar múltiples consultas a diferentes tablas para recopilar el conjunto completo de datos que se necesita para las operaciones de unión.
 
-Drizzle maneja esto como lo haríamos con SQL. Traduce su sintaxis a una sentencia SQL. Entonces termina utilizando una sola query cuando hace el pedido a la base de datos haciéndolo mucho mas ágil y rápido.
+Drizzle aborda este proceso de manera más eficiente, ya que traduce su sintaxis a una sentencia SQL y, por lo tanto, puede realizar una sola consulta a la base de datos. Este enfoque agiliza significativamente el rendimiento de Drizzle en comparación con Prisma.
 
 #### Prepeared Statements
 
 [Query performance](https://orm.drizzle.team/docs/perf-queries)
 
-Algo bastante util que nos provee Drizzle es la posibilidad de usar Prepeared Statements. Estos lo que hacen es en vez de llamar al query builder cada vez que queremos hacer ese query, arman el query y lo dejan preparado para utilizar a través de una constante de js. Podemos hacer uso de estos querys con variables dentro para entonces optimizar el tiempo en el que se arma la query.
+Un aspecto sumamente útil que nos proporciona Drizzle es la capacidad de utilizar Prepared Statements (Declaraciones Preparadas). Estas declaraciones preparadas permiten, en lugar de llamar al generador de consultas cada vez que necesitamos realizar una consulta, construir la consulta y dejarla preparada para su uso a través de una constante en JavaScript. Esto nos habilita la posibilidad de emplear estas consultas preparadas con variables internas, lo cual optimiza el tiempo necesario para construir la consulta en el momento de su ejecución.
+
+A continuación, se presenta un ejemplo de cómo se utilizan las declaraciones preparadas en Drizzle:
 
 ```typescript
 const p1 = db
@@ -108,36 +105,25 @@ await p1.execute({ id: 10 });
 await p1.execute({ id: 12 });
 ```
 
-Esto nos ahorra el tiempo de traducción a SQL de cada query ya que la query se arma una vez y se guarda en la constante p1. Y después solamente se utiliza la query anteriormente armada. A diferencia de hacerlo de esta manera:
-
-```typescript
-await db.select().from(customers).where(eq(customers.id, 10));
-
-await db.select().from(customers).where(eq(customers.id, 12));
-```
-
-En este caso estaríamos armando la misma query con la única diferencia de que comparamos.
+Este enfoque ahorra tiempo en la traducción de la consulta a SQL en cada ejecución, ya que la consulta se construye una vez y se almacena en la constante "p1". Luego, simplemente utilizamos la consulta que se había preparado anteriormente. Comparado con la alternativa en la que se genera la consulta desde cero en cada ejecución, este enfoque resulta más eficiente y beneficioso.
 
 #### Benchmarks
 
 [benchmark](https://github.com/drizzle-team/drizzle-northwind-benchmarks)
 
-Técnicamente estos benchmarks son hechos por el propio team detrás de drizzle pero igualmente sirven para ilustrar las diferencias en performance entre drizzle y otras ORMs.
-Ademas también tenemos números sobre drizzle haciendo uso de prearmed statements y sin prepared statements.
+Desde un punto de vista técnico, es relevante mencionar que estos benchmarks son elaborados por el propio equipo de Drizzle. Aunque provienen de fuentes internas, estos benchmarks tienen un valor significativo al ilustrar las diferencias de rendimiento entre Drizzle y otras soluciones ORM. Además, ofrecen datos comparativos que muestran cómo se comporta Drizzle al utilizar declaraciones preparadas en comparación con el escenario donde no se utilizan. Estos resultados resultan esenciales para comprender el rendimiento de Drizzle en diversas situaciones, lo que los convierte en una valiosa fuente de información al evaluar su idoneidad para proyectos específicos.
 
-Este benchmark nos muestra la cantidad de querys promedio por segundo.
-En primer lugar tenemos los datos sobre un select all.![Alt text](image-2.png)
+Este conjunto de pruebas nos proporciona información sobre la cantidad promedio de consultas por segundo. Para ilustrar este punto, comencemos con los datos relacionados con una operación "select all".![Alt text](image-2.png)
 
-Como se puede ver incluso en un query tan simple como un select all hay una gran diferencia en cantidad de queries hechas por segundo entre los prepared statements y sin prepared statements.
-
+Como se puede observar, incluso en una consulta aparentemente sencilla, como un "select all," se aprecia una marcada diferencia en la cantidad de consultas realizadas por segundo entre el uso de "prepared statements" y la omisión de los mismos.
 ![Alt text](image-3.png)
 
-En este ejemplo que es un poco mas complejo ya que estamos haciendo un select, where y left join la diferencia es mucho mas notable. Preparar semejante query cada para cada ejecución tiene un claro impacto en la cantidad de querys por segundo que se pueden hacer.
+En este ejemplo, que implica una consulta algo más compleja al incluir un "select," "where" y un "left join," la diferencia en el rendimiento es aún más evidente. Preparar una consulta de esta magnitud en cada ejecución tiene un impacto notable en la cantidad de consultas que se pueden realizar por segundo.
 
 ## Conclusion
 
-Drizzle es una herramienta que te da flexibilidad y libertad. Ademas es una herramienta que por ser tan simple logra tener una performance mejor que la mayoría de los ORMs populares especialmente usando prepared statements.
+Drizzle es una herramienta que destaca por su flexibilidad y sencillez. A pesar de su simplicidad, logra ofrecer un rendimiento superior en comparación con la mayoría de los ORMs populares, especialmente cuando se utilizan prepared statements.
 
-Sin embargo utilizando Drizzle vas a tener que hacer left joins. Entonces si estas buscando una herramienta que te ahorre escribir SQL, probablemente drizzle no es lo que estas buscando.
+Sin embargo, es importante tener en cuenta que al utilizar Drizzle, es necesario gestionar las operaciones de "left join" manualmente. Por lo tanto, si estás buscando una herramienta que te libere completamente de escribir SQL, es posible que Drizzle no sea la mejor opción en ese aspecto.
 
-En conclusion, Drizzle es perfecto para los que buscan una ORM que se encargue de hacer las migraciones y en donde definir el formato de los datos sea simple. Si sumado a eso estas buscando velocidad, Drizzle con prepared statements y considerando que arma tan solo un query en cada sentencia es de las mejores opciones.
+En resumen, Drizzle se presenta como una elección ideal para aquellos que buscan una ORM que facilite la administración de migraciones y la definición del esquema de datos de manera sencilla. Si además valoras la velocidad, Drizzle, especialmente cuando se utilizan prepared statements y teniendo en cuenta que genera solo una consulta por cada sentencia, se convierte en una de las opciones más sólidas.
