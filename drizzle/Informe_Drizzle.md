@@ -82,6 +82,30 @@ Dado que Drizzle utiliza TypeScript para definir el esquema de datos, puede apro
 Drizzle proporciona al usuario la posibilidad de utilizar operadores similares a los que se emplean en SQL al realizar consultas. La sintaxis utilizada en las consultas de Drizzle es muy parecida a la de SQL, aunque con un aspecto más estilizado. Además, se puede aprovechar la inferencia de TypeScript en estas consultas. En esencia, Drizzle se basa en SQL, lo que puede considerarse tanto una ventaja como una desventaja, dependiendo de la familiaridad del usuario con el SQL.
 
 En contraste, Prisma utiliza algunos operadores que resultan más amigables para aquellos que no están familiarizados con SQL. Esta diferencia en enfoque es importante y debe ser tenida en cuenta al elegir entre Drizzle y Prisma.
+El formato de la tabla seria el siguiente:
+
+![Alt text](image-4.png)
+
+El siguiente seria el formato de los datos:
+
+```typescript
+export const posts = pgTable("posts", {
+  id: serial("id").primaryKey(),
+  content: text("content").notNull(),
+});
+
+export const postsRelations = relations(posts, ({ many }) => ({
+  comments: many(comments),
+}));
+
+export const comments = pgTable("comments", {
+  id: serial("id").primaryKey(),
+  content: text("content").notNull(),
+  postId: integer("post_id").references(() => posts.id),
+});
+```
+
+Y este es un ejemplo de query hecho a las dos tablas.
 
 ```typescript
 await db.query.posts.findMany({
